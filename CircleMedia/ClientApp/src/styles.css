@@ -16,64 +16,90 @@
   opacity: 0;
 }
 body {
-    font-family: Helvetica, Arial, sans-serif;
-  }
-  h1, h2 {
-    font-family: "Raleway", sans-serif;
-  }
-  
-  h3, h4, h5 {
-    font-family: Helvetica, Arial, sans-serif;
-  }
-  
-  #page-title {
-    padding: 15px 0;
-    position: relative;
-    margin-left: -15px;
-    margin-right: -15px;
-  }
-  
-  #page-title h1 {
-    color: #333;
-    font-size: 28px;
-    font-weight: 300;
-    letter-spacing: 1px;
-    line-height: 1;
-    margin: 0;
-    margin-left: 15px;
-    text-transform: uppercase;
-  }
+  font-family: Helvetica, Arial, sans-serif;
+}
+h1, h2 {
+  font-weight: 300;
+  font-family: "Raleway", sans-serif;
+}
 
-  .example-icon {
-    padding: 0 14px;
-  }
-  
-  .example-spacer {
-    flex: 1 1 auto;
-  }
-  .project-header {
-    padding: 15px;
-  }
-  .input-full-width {
-    width: 100%;
-  }
-  .mat-input-container {
-    width: 50%
-  }
-  .form-field-row {
-    margin-bottom: 1em; flex-direction: row; box-sizing: border-box; display: flex;
-  }
-  .mat-form-field {
-    margin-right: 1em;
-  }
-  .space-20 {
-    padding-top: 50px;
-  }
-  .form-card {
-    max-width: 80%;
-  }
-  .submit-button {
-    display: inline;
-  }
+h3, h4, h5 {
+  font-weight: 300;
+  font-family: Helvetica, Arial, sans-serif;
+}
 
-  
+#page-title {
+  border-bottom: 1px solid #eee;
+  padding: 15px 0;
+  position: relative;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+#page-title h1 {
+  color: #333;
+  font-size: 28px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  line-height: 1;
+  margin: 0;
+  margin-left: 15px;
+  text-transform: uppercase;
+}
+
+#page-title .mainDescription {
+  font-family: "Lato", sans-serif;
+  color: #777;
+  display: block;
+  font-size: 18px;
+  margin-left: 15px;
+  font-weight: 300;
+  margin-top: 10px;
+}
+
+.container-fullw {
+  margin-left: -15px;
+  margin-right: -15px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #eee;
+}
+
+.bg-white {
+  background: #ffffff !important;
+}
+
+.example-icon {
+  padding: 0 14px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+.project-header {
+  padding: 15px;
+}
+.input-full-width {
+  width: 100%;
+}
+.mat-input-container {
+  width: 50%
+}
+.form-field-row {
+  margin-bottom: 1em; flex-direction: row; box-sizing: border-box; display: flex;
+}
+.mat-form-field {
+  margin-right: 1em;
+}
+.space-20 {
+  padding-top: 50px;
+}
+.form-card {
+  max-width: 80%;
+}
+.submit-button {
+  display: inline;
+}
+

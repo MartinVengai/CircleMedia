@@ -3,27 +3,34 @@ import { EndpointFactory } from './endpoint-factory.service';
 import { ConfigurationService } from './configuration.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { Product } from '../models/product.model';
-import { Project } from '../models/project.model';
-import { IFilter, ProjectFilter } from '../models/IFilter';
+import { ProjectFilter } from '../models/IFilter';
 import { SaveProject } from '../models/save-project.model';
 
 @Injectable()
 export class ProjectEndPoint extends EndpointFactory {
-  private readonly _projectUrl: string = "/api/projects";
-  private readonly _projectSourceUrl: string = "/api/projects/sources";
-  private readonly _projectStatusUrl: string = "/api/projects/status";
+  private readonly _projectUrl: string = '/api/projects';
+  private readonly _projectSourceUrl: string = '/api/projects/sources';
+  private readonly _projectStatusUrl: string = '/api/projects/status';
+  private readonly _projectStatisticsUrl: string = '/api/projects/statistics';
 
   get projectUrl() { return this.configurations.baseUrl + this._projectUrl; }
   get projectSourceUrl() { return this.configurations.baseUrl + this._projectSourceUrl; }
   get projectStatusUrl() { return this.configurations.baseUrl + this._projectStatusUrl; }
+  get projectStatisticsUrl() { return this.configurations.baseUrl + this._projectStatisticsUrl; }
 
-  constructor(http: HttpClient,configurations: ConfigurationService, injector: Injector) {
+  constructor(http: HttpClient, configurations: ConfigurationService, injector: Injector) {
     super(http, configurations, injector);
   }
 
+  getProjectStatistics<T>(userId: string): Observable<T> {
+    const endpointUrl = `${this.projectStatisticsUrl}/${userId}`;
+
+    return this.http.get<T>(endpointUrl, this.getRequestHeaders())
+      .catch(error => this.handleError(error, () => this.getProjectStatistics(userId)));
+  }
+
   getProjectsEndpoint<T>(filter: ProjectFilter): Observable<T> {
-    let endpointUrl = `${this.projectUrl}?${this.toQueryString(filter)}`;
+    const endpointUrl = `${this.projectUrl}?${this.toQueryString(filter)}`;
 
     return this.http.get<T>(endpointUrl, this.getRequestHeaders())
       .catch(error => {
@@ -32,7 +39,7 @@ export class ProjectEndPoint extends EndpointFactory {
   }
 
   getProjectEndpoint<T>(projectId: number): Observable<T> {
-    let endpointUrl = `${this.projectUrl}/${projectId}`;
+    const endpointUrl = `${this.projectUrl}/${projectId}`;
 
     return this.http.get<T>(endpointUrl, this.getRequestHeaders())
       .catch(error => {
@@ -41,7 +48,7 @@ export class ProjectEndPoint extends EndpointFactory {
   }
 
   updateProjectEndpoint<T>(project: SaveProject): Observable<T> {
-    let endpointUrl = `${this.projectUrl}/${project.id}`;
+    const endpointUrl = `${this.projectUrl}/${project.id}`;
 
     return this.http.put<T>(endpointUrl, project, this.getRequestHeaders())
       .catch(error => {
@@ -50,7 +57,7 @@ export class ProjectEndPoint extends EndpointFactory {
   }
 
   createProjectEndpoint<T>(project: SaveProject): Observable<T> {
-    let endpointUrl = this.projectUrl;
+    const endpointUrl = this.projectUrl;
 
     return this.http.post<T>(endpointUrl, project, this.getRequestHeaders())
       .catch(error => {
@@ -59,7 +66,7 @@ export class ProjectEndPoint extends EndpointFactory {
   }
 
   deleteProjectEndpoint<T>(projectId: number): Observable<T> {
-    let endpointUrl = `${this.projectUrl}/${projectId}`;
+    const endpointUrl = `${this.projectUrl}/${projectId}`;
 
     return this.http.delete<T>(endpointUrl, this.getRequestHeaders())
       .catch(error => {
@@ -68,7 +75,7 @@ export class ProjectEndPoint extends EndpointFactory {
   }
 
   getProjectStatusEndpoint<T>(): Observable<T> {
-    let endpointUrl = this._projectStatusUrl;
+    const endpointUrl = this._projectStatusUrl;
 
     return this.http.get<T>(endpointUrl, this.getRequestHeaders())
       .catch(error => {
@@ -77,7 +84,7 @@ export class ProjectEndPoint extends EndpointFactory {
   }
 
   getProjectSourceEndpoint<T>(): Observable<T> {
-    let endpointUrl = this.projectSourceUrl;
+    const endpointUrl = this.projectSourceUrl;
 
     return this.http.get<T>(endpointUrl, this.getRequestHeaders())
       .catch(error => {

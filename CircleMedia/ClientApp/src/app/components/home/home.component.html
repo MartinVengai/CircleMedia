@@ -1,28 +1,27 @@
-<div class="container-fluid">
+<div class="">
   <section id="page-title">
     <h1 class="mainTitle">DASHBOARD</h1>
+    <span class="mainDescription">overview &amp; stats </span>
   </section>
 
-  <!-- <div [@fadeInOut]>
-    <mat-grid-list gutterSize="25px" cols="4" rowHeight="2:1">
-      <mat-grid-tile class="mat-elevation-z2">
-        <h3>Completed: {{ completed }}</h3>
-      </mat-grid-tile>
-      <mat-grid-tile class="mat-elevation-z2">
-        <h3>Awaiting Approval: {{ awaitingApproval }}</h3>
-      </mat-grid-tile>
-      <mat-grid-tile class="mat-elevation-z2">
-        <h3>Parked: {{ parked }}</h3>
-      </mat-grid-tile>
-      <mat-grid-tile class="mat-elevation-z2">
-        <h3>In Progress: {{ inProgress }}</h3>
-      </mat-grid-tile>
-    </mat-grid-list>
-  </div> -->
-  <div class="spacer"></div>
   <div [@fadeInOut]>
-    <mat-card>
-      <todo-demo></todo-demo>
-    </mat-card>
+    <div class="container-fluid container-fullw bg-white">
+      <div class="row">
+        <div class="col-md-8">
+          <!-- <div id='calendar'></div> -->
+        </div>
+        <div class="col-md-4">
+          <div class="row">
+            <div class="col-md-12" *ngFor="let statistic of projectStatistics">
+              <div class="panel panel-white no-radius text-center">
+                <div class="panel-body">
+                  <h1>{{ statistic.count }}</h1>
+                  <h2>{{ statistic.statusName }}</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>

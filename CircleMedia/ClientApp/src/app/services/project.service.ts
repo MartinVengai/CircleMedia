@@ -4,6 +4,7 @@ import { ProjectEndPoint } from './project-endpoint.service';
 import { Project } from '../models/project.model';
 import { Source, Status } from '../models/source.model';
 import { SaveProject } from '../models/save-project.model';
+import { IProjectStatistics } from '../models/IProjectStatistics';
 
 @Injectable()
 export class ProjectService {
@@ -36,5 +37,9 @@ export class ProjectService {
 
   getProjectStatus() {
     return this.projectEndPoint.getProjectStatusEndpoint<Status>();
+  }
+
+  getProjectStatistics(userId: string) {
+    return this.projectEndPoint.getProjectStatistics<IProjectStatistics[]>(userId);
   }
 }
