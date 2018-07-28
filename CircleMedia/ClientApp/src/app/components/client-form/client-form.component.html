@@ -1,0 +1,44 @@
+<section id="page-title">
+  <h1 class="mainTitle">Client Form</h1>
+</section>
+<mat-card>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-field-row">
+      <mat-form-field>
+          <input matInput placeholder="Name" formControlName="name" [errorStateMatcher]="matcher" required>
+          <mat-error *ngIf="name.hasError('required')">Name is <strong>required</strong></mat-error>
+          <mat-error *ngIf="name.hasError('maxlength')">Name should be maximum <strong>{{ name.errors.maxlength.requiredLength }}</strong></mat-error>
+        </mat-form-field>
+        
+    </div>
+
+    <div class="form-field-row">
+      <mat-form-field>
+        <input matInput placeholder="Email" formControlName="email" [errorStateMatcher]="matcher" required>
+        <mat-error *ngIf="email.hasError('required')">Email is <strong>required</strong></mat-error>
+        <mat-error *ngIf="email.hasError('maxlength')">Email should be maximum <strong>{{ email.errors.maxlength.requiredLength }}</strong></mat-error>
+      </mat-form-field>
+    </div>
+    
+    <div class="form-field-row">
+      <mat-form-field>
+        <input matInput placeholder="Phone" formControlName="phoneNumber" [errorStateMatcher]="matcher">
+        <mat-error *ngIf="phoneNumber.hasError('maxlength')">Phone should be maximum <strong>{{ phoneNumber.errors.maxlength.requiredLength }}</strong></mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-field-row">
+      <mat-form-field>
+        <mat-select placeholder="Sourced From" formControlName="sourcedFromId" required>
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let source of sourcedFrom" [value]="source.id">{{source.name}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="sourcedFromId.hasError('required')">Please choose an type</mat-error>
+      </mat-form-field>
+    </div>
+
+    <br>
+    <button mat-raised-button color="primary" class="submit-button" type="submit">Save</button>
+    <button mat-raised-button [routerLink]="['/admin/clients']">Back</button>
+  </form>
+</mat-card>

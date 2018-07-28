@@ -1,0 +1,63 @@
+<h2 mat-dialog-title> {{ title }} </h2>
+
+<mat-dialog-content [formGroup]="form">
+  <div class="form-field-row">
+    <mat-form-field>
+      <input matInput placeholder="Job Title" formControlName="jobTitle">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Full Name" formControlName="fullName">
+    </mat-form-field>
+  </div>
+
+  <div class="form-field-row">
+    <mat-form-field>
+      <input matInput placeholder="Email" formControlName="email" [errorStateMatcher]="matcher" required>
+      <mat-error *ngIf="email.hasError('required')">Email is
+        <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Phone Number" formControlName="phoneNumber">
+    </mat-form-field>
+  </div>
+
+  <div class="form-field-row">
+    <mat-form-field>
+      <input matInput placeholder="User Name" formControlName="userName" [errorStateMatcher]="matcher" required>
+      <mat-error *ngIf="userName.hasError('required')">User Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <div></div>
+    <button *ngIf="!isChangingPassword" style="height: 100%" class="mat-raised-button mat-primary" (click)="changePassword()">
+      <span *ngIf="!isNewUser">Change Password</span>
+    </button>
+    <mat-form-field *ngIf="isChangingPassword">
+      <input matInput type="password" placeholder="New Password" formControlName="newPassword" [errorStateMatcher]="matcher">
+    </mat-form-field>
+  </div>
+
+  <div class="form-field-row">
+    <mat-form-field>
+      <mat-select placeholder="Roles" formControlName="roles" multiple [errorStateMatcher]="matcher" required>
+        <mat-option *ngFor="let role of allRoles" [value]="role.name">{{role.name}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="roles.hasError('required')">Roles is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field *ngIf="isChangingPassword">
+      <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword" [errorStateMatcher]="matcher">
+      <mat-error *ngIf="confirmPassword.hasError('notEquivalent')">Passwords do not match</mat-error>
+      
+    </mat-form-field>
+  </div>
+
+  <div class="form-field-row">
+    <mat-checkbox formControlName="isEnabled">Is Enabled</mat-checkbox>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="mat-raised-button" (click)="close()">Close</button>
+  <button class="mat-raised-button mat-primary" (click)="save()">Save</button>
+</mat-dialog-actions>

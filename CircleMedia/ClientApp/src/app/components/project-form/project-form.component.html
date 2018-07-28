@@ -1,0 +1,85 @@
+<section id="page-title">
+  <h1 class="mainTitle">Project Form</h1>
+</section>
+<mat-card>
+  <form [formGroup]="projectForm" (ngSubmit)="submit()">
+
+    <div class="form-field-row" *ngIf="isAdmin">
+      <mat-form-field>
+        <mat-select placeholder="Assigned To" [formControl]="assignedUserId" required>
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let employee of employees" [value]="employee.id">{{employee.fullName}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="assignedUserId.hasError('required')">Please choose a user</mat-error>
+      </mat-form-field>
+
+    </div>
+
+    <div class="form-field-row" *ngIf="isAdmin">
+      <mat-form-field>
+        <mat-select placeholder="Product" [formControl]="productId" (change)="onProductChange()" required>
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let product of allProducts" [value]="product.id">{{product.name}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="productId.hasError('required')">Please choose an type</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-field-row" *ngIf="isAdmin">
+      <mat-form-field>
+        <input matInput [matDatepicker]="dateReceivedPicker" placeholder="Date Received" formControlName="dateReceived" required>
+        <mat-datepicker-toggle matSuffix [for]="dateReceivedPicker"></mat-datepicker-toggle>
+        <mat-datepicker #dateReceivedPicker disabled="false"></mat-datepicker>
+        <mat-error *ngIf="dateReceived.hasError('required')">Date Received is
+          <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [matDatepicker]="dueDatePicker" placeholder="Due Date" formControlName="dueDate" required>
+        <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #dueDatePicker disabled="false"></mat-datepicker>
+        <mat-error *ngIf="dueDate.hasError('required')">Due Date is
+          <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-field-row">
+      <mat-form-field>
+        <mat-select placeholder="Project Status" [formControl]="statusId" required>
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let status of projectStatuses" [value]="status.id">{{status.name}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="statusId.hasError('required')">Please choose an type</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <textarea matInput placeholder="Comments" matTextareaAutosize [formControl]="comment"></textarea>
+        <mat-error *ngIf="comment.hasError('maxlength')">Comments should be maximum
+          <strong>{{ comment.errors.maxlength.requiredLength }}</strong>
+        </mat-error>
+      </mat-form-field>
+
+    </div>
+
+    <div class="form-field-row" *ngIf="isAdmin">
+      <mat-form-field>
+        <input matInput placeholder="Amount" formControlName="amount" [errorStateMatcher]="matcher" required>
+        <mat-error *ngIf="amount.hasError('required')">Amount is
+          <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Deposit" formControlName="deposit" [errorStateMatcher]="matcher" required>
+        <mat-error *ngIf="deposit.hasError('required')">Deposit is
+          <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+
+    <br>
+    <button mat-raised-button color="primary" class="submit-button" type="submit">Save</button>
+    <button *ngIf="isAdmin" mat-raised-button [routerLink]="['/admin/clients/view', clientId]">Back</button>
+    <button *ngIf="!isAdmin" mat-raised-button [routerLink]="['/user/projects/all', currentUserId]">Back</button>
+  </form>
+</mat-card>

@@ -1,0 +1,43 @@
+.tab-content {
+    padding: 16px;
+}
+.list-wrap-container {
+    display: flex;
+    flex-flow: wrap;
+}
+.list-container {
+    flex: 0 0 50%;
+}
+.list-container > .table > tbody > tr > th {
+    font-size: 16px;
+    font-family: "Roboto","Helvetica Neue",sans-serif;
+    border-top: none;
+}
+.list-container > .table > tbody > tr > td {
+    font-size: 16px;
+    font-family: "Roboto","Helvetica Neue",sans-serif;
+    border-top: none;
+}
+.mat-list-icon {
+    color: rgba(0, 0, 0, 0.54);
+}
+.mat-list .mat-list-item .mat-list-text {
+    flex-direction: row;
+}
+.mat-list > .mat-list-item > .mat-list-text>* {
+    color: red;
+}
+.mat-list .mat-list-item .mat-list-text, .mat-list .mat-list-option .mat-list-text, .mat-nav-list .mat-list-item .mat-list-text, .mat-nav-list .mat-list-option .mat-list-text, .mat-selection-list .mat-list-item .mat-list-text, .mat-selection-list .mat-list-option .mat-list-text {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 0;
+}
+.mat-list .mat-list-item .mat-list-text>* {
+    flex: 1 1 auto !important;
+}
+.mat-raised-button {
+    margin-left: 5px;
+}

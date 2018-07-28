@@ -1,0 +1,27 @@
+<div class="container-fluid">
+  <header class="pageHeader">
+      <h3><i class="fa fa-truck fa-lg page-caption" aria-hidden="true"></i> {{'pageHeader.Products' | translate}}</h3>
+  </header>
+
+  <mat-card>
+    <form [formGroup]="productForm" (ngSubmit)="submit()">
+      <mat-form-field>
+        <input matInput placeholder="Name" formControlName="name" [errorStateMatcher]="matcher" required>
+        <mat-error *ngIf="name.hasError('required')">name is <strong>required</strong></mat-error>
+        <mat-error *ngIf="name.hasError('maxlength')">name should be maximum <strong>{{ name.errors.maxlength.requiredLength }}</strong></mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Price" formControlName="price" [errorStateMatcher]="matcher" required>
+        <mat-error *ngIf="price.hasError('required')">price is <strong>required</strong></mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Turnover" formControlName="turnover" [errorStateMatcher]="matcher" required>
+        <mat-error *ngIf="name.hasError('required')">Turnover is <strong>required</strong></mat-error>
+      </mat-form-field>
+      <br>
+      <button mat-raised-button color="primary" type="submit">Save</button>
+      <button mat-raised-button color="default" [routerLink]="['/products']">Back</button>
+    </form>
+  </mat-card> 
+    
+</div>

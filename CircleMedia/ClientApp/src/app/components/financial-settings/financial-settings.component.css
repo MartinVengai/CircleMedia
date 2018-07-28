@@ -1,0 +1,29 @@
+.margin-top-20 {
+    margin-top: 20px;
+}
+.mat-list-item {
+    width: 700px;
+    margin-left: 14px;
+    border-bottom: 1px solid rgba(0,0,0,.12);
+}
+.spacer {
+    /* border-bottom: 1px solid rgba(0,0,0,.12); */
+    width: 700px;
+    margin-left: 14px;
+}
+form {
+    width: 700px;
+    margin-left: 14px;
+}
+.form-container {
+    background-color: rgb(250, 250, 250);
+    margin-top: 10px;
+    margin-left: 14px;
+    width: 726px;
+}
+.space-30 {
+    padding-top: 30px;
+}
+h3 {
+    margin-left: 14px;
+}

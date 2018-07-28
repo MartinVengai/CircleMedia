@@ -1,0 +1,72 @@
+<div class="container-fluid">
+  <section id="page-title">
+    <h1 class="mainTitle">Projects</h1>
+  </section>
+
+  <div class="example-container mat-elevation-z8">
+    <div class="project-header">
+      <mat-input-container class="padding-top-10">
+        <input matInput placeholder="Search Projects" #input>
+      </mat-input-container>
+    </div>
+    <div class="example-container mat-elevation-z8">
+      <mat-progress-bar  *ngIf="dataSource.loading$ | async" mode="indeterminate"></mat-progress-bar>
+      <mat-table #table [dataSource]="dataSource" matSort matSortDisableClear>
+        <ng-container matColumnDef="client">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Client Name</mat-header-cell>
+          <mat-cell *matCellDef="let project"> {{project.client.name}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="email">
+          <mat-header-cell *matHeaderCellDef>Client Email </mat-header-cell>
+          <mat-cell *matCellDef="let project"> {{project.client.email}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="dateReceived">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Date Added </mat-header-cell>
+          <mat-cell *matCellDef="let project"> {{project.dateReceived | date}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="dueDate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Due Date </mat-header-cell>
+          <mat-cell *matCellDef="let project"> {{ project.dueDate | date }} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+          <mat-cell *matCellDef="let project" [style.color]="getColor(project.status.name)"> {{project.status.name}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="product">
+          <mat-header-cell *matHeaderCellDef> Product </mat-header-cell>
+          <mat-cell *matCellDef="let project"> {{project.product.name}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="priority">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Priority </mat-header-cell>
+          <mat-cell *matCellDef="let project">
+            <span *ngIf="project.daysRemaining == 1" class="label label-danger">Critical</span>
+            <span *ngIf="project.daysRemaining == 2" class="label label-warning">High</span>
+            <span *ngIf="project.daysRemaining == 3" class="label label-info">Normal</span>
+            <span *ngIf="project.daysRemaining == 4" class="label label-success">Completed</span>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="assigned">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <span *ngIf="!isViewingOwnProjects">Assigned To</span>
+            <span *ngIf="isViewingOwnProjects">Edit</span>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let project">
+            <span *ngIf="!isViewingOwnProjects">{{project.assignedUser.fullName}}</span>
+            <button *ngIf="isViewingOwnProjects && !isAdmin" mat-icon-button [routerLink]="['/user/clients/projects/edit', project.id]" color="primary">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button *ngIf="isViewingOwnProjects && isAdmin" mat-icon-button [routerLink]="['/admin/clients/projects/edit', project.id]" color="primary">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+    
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+
+      <mat-paginator [length]="dataSource.projectsCount$ | async" [pageSize]="50" [pageSizeOptions]="[50, 100, 200, 500]"></mat-paginator>
+    </div>
+  
+  </div>
+</div>

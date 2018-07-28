@@ -1,0 +1,106 @@
+<section id="page-title">
+  <h1 class="mainTitle">View Project</h1>
+</section>
+<mat-card>
+  <mat-card-content>
+    <mat-tab-group>
+      <mat-tab label="Project Details">
+        <div class="tab-content" *ngIf="project">
+          <div class="list-wrap-container">
+            <div class="list-container">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <th>Client Name:</th>
+                    <td>{{ project.client }} </td>
+                  </tr>
+                  <tr>
+                    <th>Client Email:</th>
+                    <td>{{ project.email }}</td>
+                  </tr>
+                  <tr>
+                    <th>Client Phone:</th>
+                    <td>{{ project.phone }}</td>
+                  </tr>
+                  <tr>
+                    <th>Total Cost</th>
+                    <td>{{ project.amount | currency : "R" }}</td>
+                  </tr>
+                  <tr>
+                    <th>Total Paid</th>
+                    <td>{{ project.deposit | currency : "R" }}</td>
+                  </tr>
+                  <tr>
+                    <th>Balance Remaining</th>
+                    <td>{{ project.balance | currency : "R" }}</td>
+                  </tr>
+                  <tr>
+                    <th>Summary</th>
+                    <td>{{ project.summary }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="list-container">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <th>Products</th>
+                    <td>
+                      <span *ngFor="let product of project.products">{{ product.name }}, </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Assigned To</th>
+                    <td>{{ project.assignedUser.fullName }}</td>
+                  </tr>
+                  <tr [class]="projectStatus">
+                    <th>Project Status</th>
+                    <td>{{ project.status.name }}</td>
+                  </tr>
+                  <tr>
+                    <th>Sourced From</th>
+                    <td>{{ project.source.name }}</td>
+                  </tr>
+                  <tr>
+                    <th>Project Start Date</th>
+                    <td>{{ project.dateReceived | date }}</td>
+                  </tr>
+                  <tr>
+                    <th>Project Due Date</th>
+                    <td>{{ project.dueDate | date }}</td>
+                  </tr>
+                  <tr>
+                    <th>Completed On</th>
+                    <td>{{ project.dateCompleted | date }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <br>
+            <button mat-raised-button color="primary" [routerLink]="['/projects/', project.id]">Edit</button>
+            <button mat-raised-button color="accent" type="button" (click)="delete()">Delete</button>
+            <button mat-raised-button [routerLink]="['/projects']">Back To List</button>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Payments">
+        <div class="tab-content">
+          <button mat-raised-button color="primary" (click)="fileInput.click()">
+            <mat-icon>attach_file</mat-icon>
+            <span>Upload Payment Proof</span>
+            <input #fileInput type="file" (change)="uploadDocument()" style="display:none;" />
+          </button>
+          <mat-list>
+            <h3 mat-subheader>Payments</h3>
+            <mat-list-item *ngFor="let document of documents">
+              <mat-icon mat-list-icon>note</mat-icon>
+              <h4 mat-line>{{document.fileName}}</h4>
+              <p> {{ document.createdDate }} </p>
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,198 @@
+<div class="nav-container" id="app_container">
+  <mat-toolbar color="primary">
+    <button mat-icon-button="" class="mat-icon-button" (click)="sidenav.toggle()">
+      <span class=" mat-button-wrapper ">
+        <mat-icon role="img" aria-hidden="true">menu</mat-icon>
+      </span>
+    </button>
+    <h1 class="app-name">
+      <a routerLink="/">{{appTitle}}</a>
+    </h1>
+    <span class="example-spacer"></span>
+
+    <button class="mat-button" mat-button="" *ngIf="isUserLoggedIn" [matMenuTriggerFor]="menu">
+      <span class="mat-button-wrapper">
+        <mat-icon>account_circle</mat-icon>
+        <ng-container *ngIf="isUserLoggedIn; else elseTemplate">
+          <span>{{ fullName }}</span>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <span>Account</span>
+        </ng-template>
+      </span>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item [routerLink]="['/settings']" fragment="profile">
+        <mat-icon aria-hidden="true">person</mat-icon>
+        <span>Manage Profile</span>
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>lock</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="app-sidenav-container">
+
+    <mat-sidenav #sidenav mode="side" opened class="app-sidenav-nav mat-elevation-z6">
+      <mat-nav-list *ngIf="isUserLoggedIn">
+        <a mat-list-item [routerLink]="['/']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+          <div class="mat-list-item-content">
+            <mat-icon>dashboard</mat-icon>Home
+          </div>
+        </a>
+      </mat-nav-list>
+      <mat-nav-list *ngIf="isAdmin">
+        <a mat-list-item [routerLink]="['/products']" [routerLinkActive]="['active']">
+          <div class="mat-list-item-content">
+            <mat-icon>merge_type</mat-icon>Products
+          </div>
+        </a>
+      </mat-nav-list>
+      <mat-nav-list *ngIf="isAdmin">
+        <a mat-list-item [routerLink]="['/admin/clients']" [routerLinkActive]="['active']">
+          <div class="mat-list-item-content">
+            <mat-icon>merge_type</mat-icon>Clients
+          </div>
+        </a>
+      </mat-nav-list>
+
+      <mat-expansion-panel class="mat-elevation-z0" *ngIf="isUserLoggedIn">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>assignment</mat-icon>Projects
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list *ngIf="isAdmin">
+          <a mat-list-item [routerLink]="['/admin/projects']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+            <div class="mat-list-item-content">
+              <mat-icon>assignment</mat-icon>All Projects
+            </div>
+          </a>
+        </mat-nav-list>
+        <mat-nav-list>
+          <a mat-list-item *ngIf="isAdmin" [routerLink]="['/admin/projects/all', userId]" [routerLinkActive]="['active']">
+            <div class="mat-list-item-content">
+              <mat-icon>assignment</mat-icon>My Projects
+            </div>
+          </a>
+          <a mat-list-item *ngIf="!isAdmin" [routerLink]="['/user/projects/all', userId]" [routerLinkActive]="['active']">
+            <div class="mat-list-item-content">
+              <mat-icon>assignment</mat-icon>My Projects
+            </div>
+          </a>
+        </mat-nav-list>
+        <mat-nav-list>
+          <a mat-list-item *ngIf="isAdmin" [routerLink]="['/admin/projects/completed', userId]" [routerLinkActive]="['active']">
+            <div class="mat-list-item-content">
+              <mat-icon>assignment</mat-icon>Completed
+            </div>
+          </a>
+          <a mat-list-item *ngIf="!isAdmin" [routerLink]="['/user/projects/completed', userId]" [routerLinkActive]="['active']">
+            <div class="mat-list-item-content">
+              <mat-icon>assignment</mat-icon>Completed
+            </div>
+          </a>
+        </mat-nav-list>
+        <mat-nav-list>
+          <a mat-list-item *ngIf="isAdmin" [routerLink]="['/admin/projects/parked', userId]" [routerLinkActive]="['active']">
+            <div class="mat-list-item-content">
+              <mat-icon>assignment</mat-icon>Parked
+            </div>
+          </a>
+          <a mat-list-item *ngIf="!isAdmin" [routerLink]="['/user/projects/parked', userId]" [routerLinkActive]="['active']">
+            <div class="mat-list-item-content">
+              <mat-icon>assignment</mat-icon>Parked
+            </div>
+          </a>
+        </mat-nav-list>
+        <mat-nav-list>
+          <a mat-list-item *ngIf="isAdmin" [routerLink]="['/admin/projects/progress', userId]" [routerLinkActive]="['active']">
+            <div class="mat-list-item-content">
+              <mat-icon>assignment</mat-icon>In Progress
+            </div>
+          </a>
+          <a mat-list-item *ngIf="!isAdmin" [routerLink]="['/user/projects/progress', userId]" [routerLinkActive]="['active']">
+            <div class="mat-list-item-content">
+              <mat-icon>assignment</mat-icon>In Progress
+            </div>
+          </a>
+        </mat-nav-list>
+        <mat-nav-list>
+          <a mat-list-item *ngIf="isAdmin" [routerLink]="['/admin/projects/pending', userId]" [routerLinkActive]="['active']">
+            <div class="mat-list-item-content">
+              <mat-icon>assignment</mat-icon>Pending
+            </div>
+          </a>
+          <a mat-list-item *ngIf="!isAdmin" [routerLink]="['/user/projects/pending', userId]" [routerLinkActive]="['active']">
+            <div class="mat-list-item-content">
+              <mat-icon>assignment</mat-icon>Pending
+            </div>
+          </a>
+        </mat-nav-list>
+
+      </mat-expansion-panel>
+
+
+      <mat-nav-list *ngIf="isAdmin">
+        <a mat-list-item [routerLink]="['/admin/users']" [routerLinkActive]="['active']">
+          <div class="mat-list-item-content">
+            <mat-icon>people</mat-icon>Users
+          </div>
+        </a>
+      </mat-nav-list>
+      <mat-nav-list *ngIf="false">
+        <a mat-list-item [routerLink]="['/admin/settings/finance']" [routerLinkActive]="['active']">
+          <div class="mat-list-item-content">
+            <mat-icon>settings</mat-icon>Settings
+          </div>
+        </a>
+      </mat-nav-list>
+      <mat-nav-list *ngIf="false">
+        <a mat-list-item [routerLink]="['/admin/cashflow']" [routerLinkActive]="['active']">
+          <div class="mat-list-item-content">
+            <mat-icon>money</mat-icon>Cash Flow
+          </div>
+        </a>
+      </mat-nav-list>
+      <mat-divider></mat-divider>
+    </mat-sidenav>
+    <mat-sidenav-content style="margin-left: 200px; margin-right: 0px;">
+      <div style="margin: 15px">
+        <router-outlet></router-outlet>
+      </div>
+      <!-- <div class="app-footer-root">
+        <footer class="app-footer">
+          <div class="app-footer-link">
+            <p>
+              <span>CircleMedia</span> © 2018
+              <a href="https://www.circlemedia.co.za" target="_blank">www.circlemedia.co.za</a>
+            </p>
+          </div>
+        </footer>
+      </div> -->
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+  <div id="pre-bootstrap" *ngIf="!removePrebootScreen" [class.prebootShow.app-component]="!isAppLoaded" class="app-component prebootStep">
+    <div class="messaging">
+      <h1>
+        Loaded!
+      </h1>
+      <p>
+        CIRCLEMEDIA PROJECT MANAGEMENT -
+        <span class="appName" style="font-style:italic">CIRCLEMEDIA</span>&copy;
+      </p>
+
+    </div>
+  </div>
+
+  <div *ngIf="shouldShowLoginModal" class="modal fade" bsModal #loginModal="bs-modal" (onShown)="onLoginModalShown()" (onHidden)="onLoginModalHidden()"
+    (onHide)="onLoginModalHide()" [config]="{backdrop: 'static'}" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <app-login #loginControl isModal="true"></app-login>
+    </div>
+  </div>
+</div>
+<ng2-toasty [position]="'top-right'"></ng2-toasty>

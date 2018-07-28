@@ -1,0 +1,85 @@
+<div class="container-fluid">
+  <section id="page-title">
+    <h1 class="mainTitle">Financial Settings</h1>
+  </section>
+
+  <div [@fadeInOut]>
+    <mat-card>
+      <mat-card-content>
+        <div class="example-container">
+          <h3>Income categories</h3>
+          <button mat-button color="primary" (click)="onShowForm('income')">
+            <mat-icon>add_circle</mat-icon>
+            <span>Add income category</span>
+          </button>
+          <div class="spacer"></div>
+          <div class="form-container" *ngIf="showIncomeForm">
+            <form [formGroup]="form">
+              <mat-form-field>
+                <input matInput placeholder="Name" formControlName="name" [errorStateMatcher]="matcher" required>
+                <mat-error *ngIf="name.hasError('required')">Name is
+                  <strong>required</strong>
+                </mat-error>
+                <mat-error *ngIf="name.hasError('maxlength')">Name should be maximum
+                  <strong>{{ name.errors.maxlength.requiredLength }}</strong>
+                </mat-error>
+              </mat-form-field>
+              <button mat-button color="primary" (click)="submit('income')">Save</button>
+              <button mat-button (click)="onShowForm()">Cancel</button>
+            </form>
+          </div>
+          <mat-list>
+            <mat-list-item *ngFor="let category of incomeCategories">
+              <h3 matLine>{{ category.name }}</h3>
+              <button mat-icon-button matTooltip="Delete this category?">
+                <mat-icon (click)="delete(category, 'income')" color="warn" class="mat-24">remove_circle</mat-icon>
+              </button>
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="space-30"></div>
+
+  <div [@fadeInOut]>
+    <mat-card>
+      <mat-card-content>
+        <div class="tab-content">
+          <div class="example-container">
+            <h3>Expense category</h3>
+            <button mat-button color="primary" (click)="onShowForm('expense')">
+              <mat-icon>add_circle</mat-icon>
+              <span>Add income category</span>
+            </button>
+            <div class="spacer"></div>
+            <div class="form-container" *ngIf="showExpenseForm">
+              <form [formGroup]="form">
+                <mat-form-field>
+                  <input matInput placeholder="Name" formControlName="name" [errorStateMatcher]="matcher" required>
+                  <mat-error *ngIf="name.hasError('required')">Name is
+                    <strong>required</strong>
+                  </mat-error>
+                  <mat-error *ngIf="name.hasError('maxlength')">Name should be maximum
+                    <strong>{{ name.errors.maxlength.requiredLength }}</strong>
+                  </mat-error>
+                </mat-form-field>
+                <button mat-button color="primary" (click)="submit('expense')">Save</button>
+                <button mat-button (click)="onShowForm()">Cancel</button>
+              </form>
+            </div>
+            <mat-list>
+              <mat-list-item *ngFor="let category of expenseCategories">
+                <h3 matLine>{{ category.name }}</h3>
+                <button mat-icon-button matTooltip="Delete this category?">
+                  <mat-icon (click)="delete(category, 'expense')" color="warn" class="mat-24">remove_circle</mat-icon>
+                </button>
+              </mat-list-item>
+            </mat-list>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

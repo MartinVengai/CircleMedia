@@ -1,0 +1,154 @@
+<div class="container-fluid">
+  <section id="page-title">
+    <h1 class="mainTitle">Manage Users</h1>
+  </section>
+
+  <div class="users-container mat-elevation-z8">
+    <!-- <div class="users-header">
+      <mat-form-field>
+        <input matInput (searchChange)="onSearchChanged($event)" placeholder="Filter">
+      </mat-form-field>
+    </div> -->
+    <mat-progress-bar  *ngIf="dataSource.loading$ | async" mode="indeterminate"></mat-progress-bar>
+    <mat-progress-bar *ngIf="loadingIndicator" mode="indeterminate"></mat-progress-bar>
+    <mat-table #table [dataSource]="dataSource">
+      <ng-container matColumnDef="title">
+        <mat-header-cell *matHeaderCellDef> Job Title </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{user.jobTitle}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="userName">
+        <mat-header-cell *matHeaderCellDef> User Name </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{user.userName}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="fullName">
+        <mat-header-cell *matHeaderCellDef> Full Name </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{user.fullName}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{user.email}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>
+          <button mat-button color="primary" (click)="newUser()">
+            <mat-icon>person_add</mat-icon>
+            <span>Add User</span>
+          </button>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let user">
+          <button mat-icon-button (click)="editUser(user)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deleteUser(user)" color="accent" >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator [length]="dataSource.usersCount$ | async" [pageSize]="5" [pageSizeOptions]="[3, 5, 10]"></mat-paginator>
+
+  </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div>
+    <div class="row control-box">
+        <div class="col-sm-8">
+            <div class="form-group search-box">
+                <search-box (searchChange)="onSearchChanged($event)" placeholder="{{'users.management.Search' | translate}}">></search-box>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="navbar action-box">
+                <ul class="nav navbar-nav navbar-right">
+                    <li *ngIf="canManageUsers && canAssignRoles" class="toolbaritem">
+                        <a href="javascript:;" (click)="newUser(row)">
+                            <i class="fa fa-plus-circle"></i> {{'users.management.NewUser' | translate}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <ngx-datatable class="material colored-header sm table table-striped table-hover"
+                   [loadingIndicator]="loadingIndicator"
+                   [rows]="rows"
+                   [rowHeight]="35"
+                   [headerHeight]="35"
+                   [footerHeight]="35"
+                   [columns]="columns"
+                   [scrollbarV]="true"
+                   [columnMode]="'force'">
+    </ngx-datatable>
+
+    <ng-template #indexTemplate let-value="value">
+        <strong>{{value}}</strong>
+    </ng-template>
+
+    <ng-template #userNameTemplate let-row="row" let-value="value">
+        <span [class.locked-out]="row.isLockedOut" [class.user-disabled]="!row.isEnabled">
+            <i *ngIf="row.isLockedOut" class="fa fa-exclamation-triangle"> </i>
+            <i *ngIf="!row.isEnabled" class="fa fa-exclamation"> </i>
+            {{value}}
+        </span>
+    </ng-template>
+
+    <ng-template #rolesTemplate let-row="row" let-value="value" let-i="index">
+        <span class="user-role badge" *ngFor="let role of value">{{role}}</span>
+    </ng-template>
+
+    <ng-template #actionsTemplate let-row="row" let-value="value" let-i="index">
+        <div *ngIf="canManageUsers">
+            <a class="btn btn-link btn-xs" href="javascript:;" (click)="editUser(row)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {{'users.management.Edit' | translate}}</a>
+            |
+            <a class="btn btn-link btn-xs" href="javascript:;" (click)="deleteUser(row)"><i class="fa fa-trash-o" aria-hidden="true"></i> {{'users.management.Delete' | translate}}</a>
+        </div>
+    </ng-template>
+
+
+    <div class="modal fade" bsModal #editorModal="bs-modal" (onHidden)="onEditorModalHidden()" [config]="{backdrop: 'static'}" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left"><i class="fa fa-user-circle-o"></i> {{editingUserName ? ('users.management.EditUser' | translate:editingUserName) : ('users.management.NewUser' | translate)}}</h4>
+                    <button type="button" class="close pull-right" title="Close" (click)="editorModal.hide()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <user-info #userEditor [isGeneralEditor]="true"></user-info>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

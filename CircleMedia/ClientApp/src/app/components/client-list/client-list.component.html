@@ -1,0 +1,66 @@
+<div class="container-fluid">
+  <section id="page-title">
+    <h1 class="mainTitle">Clients</h1>
+  </section>
+
+  <div class="example-container mat-elevation-z8">
+    <div class="project-header">
+      <button mat-raised-button color="primary" [routerLink]="['/admin/clients/new']">
+        New Clients
+        <mat-icon>add_circle</mat-icon>
+      </button>
+      <mat-input-container class="padding-top-10">
+        <input matInput placeholder="Search Clients" #input>
+      </mat-input-container>
+    </div>
+    <div class="example-container mat-elevation-z8">
+      <mat-progress-bar *ngIf="dataSource.loading$ | async" mode="indeterminate"></mat-progress-bar>
+      <mat-table #table [dataSource]="dataSource" matSort matSortDisableClear>
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+          <mat-cell *matCellDef="let client">
+            <a mat-button color="primary" [routerLink]="['/admin/clients/view/', client.id]">{{client.name}}</a>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="email">
+          <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+          <mat-cell *matCellDef="let client"> {{client.email}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="phoneNumber">
+          <mat-header-cell *matHeaderCellDef> Phone Number </mat-header-cell>
+          <mat-cell *matCellDef="let client"> {{ client.phoneNumber }} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="source">
+          <mat-header-cell *matHeaderCellDef> Sourced From </mat-header-cell>
+          <mat-cell *matCellDef="let client">{{client.sourcedFrom.name }} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="projects">
+          <mat-header-cell *matHeaderCellDef> Projects # </mat-header-cell>
+          <mat-cell *matCellDef="let client">{{client.projectsCount }} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <mat-header-cell *matHeaderCellDef> 	% Completed </mat-header-cell>
+          <mat-cell *matCellDef="let client">
+            <span *ngIf="client.projectsCount == 0">No projects!</span>
+            <mat-progress-bar 
+              *ngIf="client.projectsCount != 0 && 50 > client.projectsCompleted/client.projectsCount*100"
+              color="warn" mode="determinate"
+              value="{{ client.projectsCompleted / client.projectsCount * 100 }}">
+            </mat-progress-bar>
+            <mat-progress-bar 
+              *ngIf="client.projectsCount != 0 && client.projectsCompleted/client.projectsCount*100 >= 50"
+              color="primary" mode="determinate"
+              value="{{ client.projectsCompleted / client.projectsCount * 100 }}">
+            </mat-progress-bar>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+
+      <mat-paginator [length]="dataSource.clientsCount$ | async" [pageSize]="50" [pageSizeOptions]="[50, 100, 200, 500]"></mat-paginator>
+    </div>
+
+  </div>
+</div>

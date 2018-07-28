@@ -1,0 +1,128 @@
+.nav-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0
+  }
+
+  .app-footer-root {
+    flex: 0 0 auto;
+    box-sizing: border-box;
+    max-height: none;
+  }
+  .app-footer {
+    margin-top: 2em;
+    height: 4em;
+    text-align: center;
+    background: #3f51b5;
+    color: #fff;
+  }
+  
+  .is-mobile .app-toolbar {
+    position: fixed;
+    z-index: 2
+  }
+  
+  .app-toolbar-spacer {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto
+  }
+  .mat-icon-button .mat-button-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  h1.app-name {
+    margin-left: 8px
+  }
+  
+    h1.app-name > a {
+        color: inherit;
+        cursor: default;
+        text-decoration: inherit
+    }
+
+    .navbar-brand.app-component {
+        float: none;
+        color: #fff;
+        text-decoration: inherit;
+        font-size: 30px;
+    }
+    
+    .navbar-brand.app-component > img {
+        display: inline;
+        height: 35px;
+    }
+  
+  .mat-list-item.active {
+      background-color: #e8eaf6;
+      color: #3f51b5;
+  }
+  .mat-list-item-content {
+    margin-left: -10px;
+  }
+  .app-sidenav-nav {
+    min-width: 200px;
+    border-right-color: rgba(0,0,0,.12);
+    border-right: 1px solid rgba(0,0,0,.12);
+  }
+  
+    .app-sidenav-nav .mat-nav-list {
+      padding-top: 0
+    }
+  
+    .app-sidenav-nav .mat-icon {
+      margin-left: 8px;
+      margin-right: 16px
+    }
+
+    .app-sidenav-nav .mat-expansion-panel-header {
+      padding-left: 16px;
+  }
+  
+    .app-sidenav-nav .mat-expansion-panel-header-title {
+      line-height: 24px
+    }
+  
+    .app-sidenav-nav .mat-expansion-panel-body {
+      padding: 0
+    }
+  
+      .app-sidenav-nav .mat-expansion-panel-body .mat-list-item .mat-list-item-content {
+        padding-left: 32px
+      }
+  
+  .app-sidenav-container {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1
+  }
+  
+  .is-mobile .app-sidenav-container {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto
+  }
+  
+  .example-icon {
+    padding: 0 14px;
+  }
+  
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+  .app-icon-size {
+    margin-left: 8px !important;
+  }
+  .form-card {
+    max-width: 80%;
+  }
+
