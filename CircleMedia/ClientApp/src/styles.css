@@ -4,6 +4,7 @@
 @import 'app/assets/styles/vertical-tabs.css';
 @import 'app/assets/styles/ngx-datatable.css';
 @import 'app/assets/styles/themes.css';
+@import "~fullcalendar/dist/fullcalendar.min.css";
 
 .mat-dialog-container {
   width: 960px !important;

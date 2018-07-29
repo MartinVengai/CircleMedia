@@ -4,6 +4,8 @@ import { ProjectService } from './../../services/project.service';
 import { Component, OnInit } from '@angular/core';
 import { fadeInOut } from '../../services/animations';
 import { IProjectStatistics } from '../../models/IProjectStatistics';
+import 'fullcalendar';
+declare let $: any;
 
 @Component({
   selector: 'app-home',
@@ -18,6 +20,13 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today ',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      }
+    });
     this.projectService.getProjectStatistics(this.currentUserId).subscribe(result => this.projectStatistics = result);
   }
 
