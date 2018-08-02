@@ -10,6 +10,9 @@ namespace CircleMedia.Resources
     {
         public AutoMapperProfile()
         {
+            CreateMap<Notification, NotificationResource>()
+                .ForMember(n => n.Project, map => map.MapFrom(nr => nr.Project));
+
             CreateMap<Income, SaveIncomeResource>()
                 .ReverseMap();
 
@@ -42,15 +45,15 @@ namespace CircleMedia.Resources
 
             CreateMap(typeof(QueryResult<>), typeof(QueryResultResource<>));
 
-            CreateMap<ApplicationUser, UserViewModel>()
+            CreateMap<ApplicationUser, UserResource>()
                    .ForMember(d => d.Roles, map => map.Ignore());
 
-            CreateMap<UserViewModel, ApplicationUser>()
+            CreateMap<UserResource, ApplicationUser>()
                 .ForMember(d => d.Roles, map => map.Ignore());
 
-            CreateMap<ApplicationUser, UserEditViewModel>()
+            CreateMap<ApplicationUser, UserEditResource>()
                 .ForMember(d => d.Roles, map => map.Ignore());
-            CreateMap<UserEditViewModel, ApplicationUser>()
+            CreateMap<UserEditResource, ApplicationUser>()
                 .ForMember(d => d.Roles, map => map.Ignore());
 
             CreateMap<ApplicationUser, UserPatchViewModel>()

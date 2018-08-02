@@ -31,21 +31,21 @@ namespace CircleMedia.Controllers
         }
 
         [HttpGet("users/me")]
-        [Produces(typeof(UserViewModel))]
+        [Produces(typeof(UserResource))]
         public async Task<IActionResult> GetCurrentUser()
         {
             return await GetUserByUserName(this.User.Identity.Name);
         }
 
         [HttpGet("users/{id}", Name = GetUserByIdActionName)]
-        [Produces(typeof(UserViewModel))]
+        [Produces(typeof(UserResource))]
         public async Task<IActionResult> GetUserById(string id)
         {
             if (!(await _authorizationService.AuthorizeAsync(this.User, id, AccountManagementOperations.Read)).Succeeded)
                 return new ChallengeResult();
 
 
-            UserViewModel userVM = await GetUserViewModelHelper(id);
+            UserResource userVM = await GetUserViewModelHelper(id);
 
             if (userVM != null)
                 return Ok(userVM);
@@ -54,7 +54,7 @@ namespace CircleMedia.Controllers
         }
 
         [HttpGet("users/username/{userName}")]
-        [Produces(typeof(UserViewModel))]
+        [Produces(typeof(UserResource))]
         public async Task<IActionResult> GetUserByUserName(string userName)
         {
             ApplicationUser appUser = await _accountManager.GetUserByUserNameAsync(userName);
@@ -70,7 +70,7 @@ namespace CircleMedia.Controllers
 
 
         [HttpGet("users")]
-        [Produces(typeof(List<UserViewModel>))]
+        [Produces(typeof(List<UserResource>))]
         [Authorize(Authorization.Policies.ViewAllUsersPolicy)]
         public async Task<IActionResult> GetUsers()
         {
@@ -78,17 +78,17 @@ namespace CircleMedia.Controllers
         }
 
         [HttpGet("users/{page:int}/{pageSize:int}")]
-        [Produces(typeof(List<UserViewModel>))]
+        [Produces(typeof(List<UserResource>))]
         [Authorize(Authorization.Policies.ViewAllUsersPolicy)]
         public async Task<IActionResult> GetUsers(int page, int pageSize)
         {
             var usersAndRoles = await _accountManager.GetUsersAndRolesAsync(page, pageSize);
 
-            List<UserViewModel> usersVM = new List<UserViewModel>();
+            List<UserResource> usersVM = new List<UserResource>();
 
             foreach (var item in usersAndRoles)
             {
-                var userVM = Mapper.Map<UserViewModel>(item.Item1);
+                var userVM = Mapper.Map<UserResource>(item.Item1);
                 userVM.Roles = item.Item2;
 
                 usersVM.Add(userVM);
@@ -98,13 +98,13 @@ namespace CircleMedia.Controllers
         }
 
         [HttpPut("users/me")]
-        public async Task<IActionResult> UpdateCurrentUser([FromBody] UserEditViewModel user)
+        public async Task<IActionResult> UpdateCurrentUser([FromBody] UserEditResource user)
         {
             return await UpdateUser(Utilities.GetUserId(this.User), user);
         }
 
         [HttpPut("users/{id}")]
-        public async Task<IActionResult> UpdateUser(string id, [FromBody] UserEditViewModel user)
+        public async Task<IActionResult> UpdateUser(string id, [FromBody] UserEditResource user)
         {
             ApplicationUser appUser = await _accountManager.GetUserByIdAsync(id);
             string[] currentRoles = appUser != null ? (await _accountManager.GetUserRolesAsync(appUser)).ToArray() : null;
@@ -152,7 +152,7 @@ namespace CircleMedia.Controllers
 
                 if (isValid)
                 {
-                    Mapper.Map<UserViewModel, ApplicationUser>(user, appUser);
+                    Mapper.Map<UserResource, ApplicationUser>(user, appUser);
 
                     var result = await _accountManager.UpdateUserAsync(appUser, user.Roles);
                     if (result.Item1)
@@ -231,7 +231,7 @@ namespace CircleMedia.Controllers
 
         [HttpPost("users")]
         [Authorize(Authorization.Policies.ManageAllUsersPolicy)]
-        public async Task<IActionResult> Register([FromBody] UserEditViewModel user)
+        public async Task<IActionResult> Register([FromBody] UserEditResource user)
         {
             if (!(await _authorizationService.AuthorizeAsync(this.User, Tuple.Create(user.Roles, new string[] { }), Authorization.Policies.AssignAllowedRolesPolicy)).Succeeded)
                 return new ChallengeResult();
@@ -248,7 +248,7 @@ namespace CircleMedia.Controllers
                 var result = await _accountManager.CreateUserAsync(appUser, user.Roles, user.NewPassword);
                 if (result.Item1)
                 {
-                    UserViewModel userVM = await GetUserViewModelHelper(appUser.Id);
+                    UserResource userVM = await GetUserViewModelHelper(appUser.Id);
                     return CreatedAtAction(GetUserByIdActionName, new { id = userVM.Id }, userVM);
                 }
 
@@ -261,7 +261,7 @@ namespace CircleMedia.Controllers
 
 
         [HttpDelete("users/{id}")]
-        [Produces(typeof(UserViewModel))]
+        [Produces(typeof(UserResource))]
         public async Task<IActionResult> DeleteUser(string id)
         {
             if (!(await _authorizationService.AuthorizeAsync(this.User, id, AccountManagementOperations.Delete)).Succeeded)
@@ -271,7 +271,7 @@ namespace CircleMedia.Controllers
                 return BadRequest("User cannot be deleted. Delete all orders associated with this user and try again");
 
 
-            UserViewModel userVM = null;
+            UserResource userVM = null;
             ApplicationUser appUser = await this._accountManager.GetUserByIdAsync(id);
 
             if (appUser != null)
@@ -520,13 +520,13 @@ namespace CircleMedia.Controllers
 
 
 
-        private async Task<UserViewModel> GetUserViewModelHelper(string userId)
+        private async Task<UserResource> GetUserViewModelHelper(string userId)
         {
             var userAndRoles = await _accountManager.GetUserAndRolesAsync(userId);
             if (userAndRoles == null)
                 return null;
 
-            var userVM = Mapper.Map<UserViewModel>(userAndRoles.Item1);
+            var userVM = Mapper.Map<UserResource>(userAndRoles.Item1);
             userVM.Roles = userAndRoles.Item2;
 
             return userVM;

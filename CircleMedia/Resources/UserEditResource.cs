@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CircleMedia.Resources
 {
-    public class UserEditViewModel : UserViewModel
+    public class UserEditResource : UserResource
     {
         public string CurrentPassword { get; set; }
 

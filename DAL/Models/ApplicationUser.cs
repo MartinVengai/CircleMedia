@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace DAL.Models
 {
@@ -20,7 +21,6 @@ namespace DAL.Models
             }
         }
 
-
         public string JobTitle { get; set; }
         public string FullName { get; set; }
         public string Configuration { get; set; }
@@ -33,15 +33,18 @@ namespace DAL.Models
         public DateTime UpdatedDate { get; set; }
 
 
-        public ICollection<Notification> Notifications { get; set; }
-        /// <summary>
-        /// Navigation property for the roles this user belongs to.
-        /// </summary>
+        public ICollection<UserNotification> UserNotifications { get; set; }
+
+        public ApplicationUser()
+        {
+            UserNotifications = new Collection<UserNotification>();
+        }
+        public void Notify(Notification notification)
+        {
+            UserNotifications.Add(new UserNotification(this, notification));
+        }
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
-        /// <summary>
-        /// Navigation property for the claims this user possesses.
-        /// </summary>
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
     }
 }

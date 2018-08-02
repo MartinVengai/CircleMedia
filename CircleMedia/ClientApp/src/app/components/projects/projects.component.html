@@ -5,9 +5,9 @@
 
   <div class="example-container mat-elevation-z8">
     <div class="project-header">
-      <mat-input-container class="padding-top-10">
+      <mat-form-field class="padding-top-10">
         <input matInput placeholder="Search Projects" #input>
-      </mat-input-container>
+      </mat-form-field>
     </div>
     <div class="example-container mat-elevation-z8">
       <mat-progress-bar  *ngIf="dataSource.loading$ | async" mode="indeterminate"></mat-progress-bar>

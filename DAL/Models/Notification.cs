@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DAL.Models
@@ -6,27 +7,24 @@ namespace DAL.Models
     public class Notification
     {
         public int Id { get; set; }
+
         public DateTime DateTime { get; set; }
-        public DateTime? DueDate { get; set; }
-        public bool IsRead { get; set; }
-        public NotificationType Type { get; set; }
+
+        public NotificationType NotificationType { get; set; }
 
         [Required]
-        public int ProductId { get; set; }
-        public Product Product { get; set; }
-        [Required]
-        public string AssignedUserId { get; set; }
-        public ApplicationUser AssignedUser { get; set; }
+        public Project Project { get; set; }
+
+        public ICollection<UserNotification> UserNotifications { get; set; }
 
         protected Notification()
         {
         }
 
-        public Notification(NotificationType type, int productId, string userId)
+        public Notification(NotificationType notificationType, Project project)
         {
-            AssignedUserId = userId;
-            ProductId = productId;
-            Type = type;
+            NotificationType = notificationType;
+            Project = project ?? throw new ArgumentNullException(nameof(project));
             DateTime = DateTime.Now;
         }
     }

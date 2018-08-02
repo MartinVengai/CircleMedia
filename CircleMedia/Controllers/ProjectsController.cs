@@ -40,15 +40,12 @@ namespace CircleMedia.Controllers
                 return BadRequest(ModelState);
 
             var project = _mapper.Map<SaveProjectResource, Project>(saveProjectResource);
-
             await _unitOfWork.Projects.AddAsync(project);
 
-            var notification = new Notification(NotificationType.ProjectCreated, project.ProductId, project.AssignedUserId)
-            {
-                DueDate = project.DueDate
-            };
+            var user = await _accountManager.GetUserByIdAsync(project.AssignedUserId);
 
-            await _unitOfWork.Notifications.AddAsync(notification);
+            var notification = new Notification(NotificationType.ProjectCreated, project);
+            user.Notify(notification);
 
             await _unitOfWork.CompleteAsync();
 
@@ -76,14 +73,10 @@ namespace CircleMedia.Controllers
                 var adminUsers = await _accountManager.GetUsersByRole("administrator");
 
                 foreach (var user in adminUsers)
-                {
-                    var notification = new Notification(NotificationType.ProjectUpdated, project.ProductId, user.Id);
-                    await _unitOfWork.Notifications.AddAsync(notification);
-                }
+                    user.Notify(new Notification(NotificationType.ProjectUpdated, project));
             }
 
             await _unitOfWork.CompleteAsync();
-
             project = await _unitOfWork.Projects.GetAsync(project.Id);
 
             return Ok(_mapper.Map<Project, ProjectResource>(project));

@@ -9,8 +9,24 @@
       <a routerLink="/">{{appTitle}}</a>
     </h1>
     <span class="example-spacer"></span>
-
-    <button class="mat-button" mat-button="" *ngIf="isUserLoggedIn" [matMenuTriggerFor]="menu">
+    <button mat-icon-button [matMenuTriggerFor]="notifications">
+      <mat-icon matBadge="15" matBadgeColor="warn">notifications</mat-icon>
+    </button>
+    <mat-menu class="notifications" #notifications="matMenu">
+      <button mat-menu-item>
+        <mat-icon>note_add</mat-icon>
+        <span>New project assigned</span>
+      </button>
+      <button mat-menu-item disabled>
+        <mat-icon>voicemail</mat-icon>
+        <span>Check voicemail</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>update</mat-icon>
+        <span>Project pending review</span>
+      </button>
+    </mat-menu>
+    <button class="mat-button" *ngIf="isUserLoggedIn" [matMenuTriggerFor]="menu">
       <span class="mat-button-wrapper">
         <mat-icon>account_circle</mat-icon>
         <ng-container *ngIf="isUserLoggedIn; else elseTemplate">

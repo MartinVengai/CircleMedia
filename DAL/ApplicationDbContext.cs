@@ -22,7 +22,7 @@ namespace DAL
         public DbSet<ExpenseCategory> ExpenseCategories { get; set; }
         public DbSet<Income> Incomes { get; set; }
         public DbSet<Notification> Notifications { get; set; }
-
+        public DbSet<UserNotification> UserNotification { get; set; }
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
         { }
@@ -37,6 +37,9 @@ namespace DAL
             builder.Entity<ApplicationRole>().HasMany(r => r.Claims).WithOne().HasForeignKey(c => c.RoleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
             builder.Entity<ApplicationRole>().HasMany(r => r.Users).WithOne().HasForeignKey(r => r.RoleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
 
+            builder.Entity<UserNotification>().HasKey(un => new { un.UserId, un.NotificationId });
+            builder.Entity<UserNotification>().HasOne(un => un.User).WithMany(u => u.UserNotifications).HasForeignKey(un => un.UserId).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<UserNotification>().HasOne(un => un.Notification).WithMany(u => u.UserNotifications).HasForeignKey(un => un.NotificationId).OnDelete(DeleteBehavior.Restrict);
         }
 
         public override int SaveChanges()

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CircleMedia.Resources
 {
-    public class UserViewModel
+    public class UserResource
     {
         public string Id { get; set; }
 
@@ -33,7 +33,7 @@ namespace CircleMedia.Resources
 
 
     ////Todo: ***Using DataAnnotations for validations until Swashbuckle supports FluentValidation***
-    //public class UserViewModelValidator : AbstractValidator<UserViewModel>
+    //public class UserViewModelValidator : AbstractValidator<UserResource>
     //{
     //    public UserViewModelValidator()
     //    {

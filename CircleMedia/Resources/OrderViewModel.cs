@@ -1,9 +1,4 @@
-﻿// ====================================================
-// More Templates: https://www.ebenmonney.com/templates
-// Email: support@ebenmonney.com
-// ====================================================
-
-namespace CircleMedia.Resources
+﻿namespace CircleMedia.Resources
 {
     public class OrderViewModel
     {

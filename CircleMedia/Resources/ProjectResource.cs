@@ -2,7 +2,6 @@
 
 namespace CircleMedia.Resources
 {
-    //    [JsonObject(IsReference = true)]
     public class ProjectResource
     {
         public int Id { get; set; }
@@ -17,7 +16,7 @@ namespace CircleMedia.Resources
         public SimpleClientResource Client { get; set; }
         public ProductResource Product { get; set; }
         public KeyValuePairResource Status { get; set; }
-        public UserViewModel AssignedUser { get; set; }
+        public UserResource AssignedUser { get; set; }
 
     }
 }
